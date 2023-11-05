@@ -4,19 +4,33 @@ app = QApplication([])
 app.setStyleSheet("""
     QWidget{
 
-        background:qlineargradient(x1: 0, y1: 0, x2: 1, y2: 1,stop: 2 green, stop: 0.4 lime,stop: 1 indigo);
+        background:qlineargradient(x1: 0, y1: 0, x2: 1, y2: 1,stop: 0.23 maroon, stop: 0.76 lime,stop: 0.87 crimson);
+    }
+    QListWidget{
+         border: 5.75px solid;
+         border-radius: 5.35px;
+         border-color:qlineargradient(x1: 0, y1: 0, x2: 1, y2: 1,stop: 0.12 lime, stop: 0.55 aqua,stop: 0.90 gold);
+         background:qlineargradient(x1: 0, y1: 0, x2: 1, y2: 1,stop: 0.15 aquamarine, stop: 0.44 coral,stop: 0.93 olive);
     }
     QPushButton{
-    border: 2px solid;
-    border-color:qlineargradient(x1: 0, y1: 0, x2: 1, y2: 1,stop: 0 white, stop: 0.4 blue,stop: 1 violet);
-        background:qlineargradient(x1: 0, y1: 0, x2: 1, y2: 1,stop: 0 white, stop: 0.4 brown,stop: 1 violet);
+        border: 2px solid;
+        border-radius: 9.5px;
+        border-color:qlineargradient(x1: 0, y1: 0, x2: 1, y2: 1,stop: 0 white, stop: 0.4 blue,stop: 1 violet);
+        background:qlineargradient(x1: 0, y1: 0, x2: 1, y2: 1,stop: 0.1 gold, stop: 0.4 lime,stop: 1 blue);
     }
-    Qlabel{
+    QLabel{
         border: 3px solid;
-        border-color:qlineargradient(x1: 0, y1: 0, x2: 1, y2: 1,stop: 0 white, stop: 0.4 bright,stop: 1 lime);
-        background:qlineargradient(x1: 0, y1: 0, x2: 1, y2: 1,stop: 0 white, stop: 0.4 bright,stop: 1 gold);
+        border-radius: 6.5px;
+        border-color:qlineargradient(x1: 0, y1: 0, x2: 1, y2: 1,stop: 0.1 indigo, stop: 0.4 crimson,stop: 0.9 lime);
+        background:qlineargradient(x1: 0, y1: 0, x2: 1, y2: 1,stop: 0.05 blue, stop: 0.25 red,stop: 0.85 gold);
+    }
+    
+ 
+    QPushButton:hover {
+        background:qlineargradient(x1: 0, y1: 0, x2: 1, y2: 1,stop: 0 red, stop: 0.4 gold,stop: 1 aqua);
     }
 """)
+
 window = QWidget()
 window.resize(950, 750)
 
