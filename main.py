@@ -1,4 +1,23 @@
+from PIL import Image
+from PyQt5.QtCore import Qt
+from PyQt5.QtGui import QImage, QPixmap
 from PyQt5.QtWidgets import *
+import os
+
+def pil2pixmap(im):
+    if im.mode == "RGB":
+        r, g, b = im.split()
+        im = Image.merge("RGB", (b, g, r))
+    elif im.mode == "RGBA":
+        r, g, b, a = im.split()
+        im = Image.merge("RGBA", (b, g, r, a))
+    elif im.mode == "L":
+        im = im.convert("RGBA")
+    im2 = im.convert("RGBA")
+    data = im2.tobytes("raw", "RGBA")
+    qim = QImage(data, im.size[0], im.size[1], QImage.Format_ARGB32)
+    pixmap = QPixmap.fromImage(qim)
+    return pixmap
 
 app = QApplication([])
 app.setStyleSheet("""
@@ -10,7 +29,7 @@ app.setStyleSheet("""
          border: 5.75px solid;
          border-radius: 5.35px;
          border-color:qlineargradient(x1: 0, y1: 0, x2: 1, y2: 1,stop: 0.12 lime, stop: 0.55 aqua,stop: 0.90 gold);
-         background:qlineargradient(x1: 0, y1: 0, x2: 1, y2: 1,stop: 0.15 aquamarine, stop: 0.44 coral,stop: 0.93 olive);
+         background:qlineargradient(x1: 0, y1: 0, x2: 1, y2: 1,stop: 0.15 aqua, stop: 0.44 coral,stop: 0.93 olive);
     }
     QPushButton{
         border: 2px solid;
@@ -28,6 +47,12 @@ app.setStyleSheet("""
  
     QPushButton:hover {
         background:qlineargradient(x1: 0, y1: 0, x2: 1, y2: 1,stop: 0 red, stop: 0.4 gold,stop: 1 aqua);
+    }
+    QLabel:hover {
+        background:qlineargradient(x1: 0, y1: 0, x2: 1, y2: 1,stop: 0 blue, stop: 0.4 violet,stop: 1 crimson);
+    }
+    QListWidget:hover {
+        background:qlineargradient(x1: 0, y1: 0, x2: 1, y2: 1,stop: 0 maroon, stop: 0.4 lime,stop: 1 indigo);
     }
 """)
 
@@ -65,6 +90,47 @@ h1.addWidget(button2)
 h1.addWidget(button3)
 h1.addWidget(button4)
 
+class WorkPhoto:
+    def __init__(self):
+        self.image = None
+        self.folder = None
+        self.filename = None
+
+    def load(self):
+        imagePath = os.path.join(self.folder, self.filename)
+        self.image = Image.open(imagePath)
+
+    def showImage(self):
+        pixel = pil2pixmap(self.image)
+        pixel = pixel.scaled(800, 600, Qt.KeepAspectRatio)
+        photo.setPixmap(pixel)
+
+    def rotate_left(self):
+        self.image = self.image.transpose(Image.ROTATE_90)
+        self.showImage()
+
+    def rotate_right(self):
+        self.image = self.image.transpose(Image.ROTATE_270)
+        self.showImage()
+
+urban = WorkPhoto()
+
+def open_folder():
+    urban.folder = QFileDialog.getExistingDirectory()
+    files = os.listdir(urban.folder)
+    listfould.clear()
+    listfould.addItems(files)
+
+def showChosenImage():
+    urban.filename = listfould.currentItem().text()
+    urban.load()
+    urban.showImage()
+
+listfould.currentRowChanged.connect(showChosenImage)
+
+button0.clicked.connect(urban.rotate_left)
+button1.clicked.connect(urban.rotate_right)
+fould.clicked.connect(open_folder)
 window.setLayout(mainline)
 window.show()
 app.exec()
