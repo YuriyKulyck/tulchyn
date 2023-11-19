@@ -1,8 +1,13 @@
+
+
+
+
 from PIL import Image, ImageFilter, ImageEnhance
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QImage, QPixmap
 from PyQt5.QtWidgets import *
 import os
+
 
 def pil2pixmap(im):
     if im.mode == "RGB":
@@ -18,6 +23,7 @@ def pil2pixmap(im):
     qim = QImage(data, im.size[0], im.size[1], QImage.Format_ARGB32)
     pixmap = QPixmap.fromImage(qim)
     return pixmap
+
 
 app = QApplication([])
 app.setStyleSheet("""
@@ -43,8 +49,8 @@ app.setStyleSheet("""
         border-color:qlineargradient(x1: 0, y1: 0, x2: 1, y2: 1,stop: 0.1 indigo, stop: 0.4 crimson,stop: 0.9 lime);
         background:qlineargradient(x1: 0, y1: 0, x2: 1, y2: 1,stop: 0.05 blue, stop: 0.25 red,stop: 0.85 gold);
     }
-    
- 
+
+
     QPushButton:hover {
         background:qlineargradient(x1: 0, y1: 0, x2: 1, y2: 1,stop: 0 red, stop: 0.4 gold,stop: 1 aqua);
     }
@@ -77,13 +83,11 @@ button5 = QPushButton("Вліво")
 button6 = QPushButton("Вправо")
 button7 = QPushButton("Дзеркало")
 
-
 mainline.addLayout(v1, stretch=2)
 mainline.addLayout(v2, stretch=4)
 
 v1.addWidget(fould)
 v1.addWidget(listfould)
-
 
 v2.addWidget(photo)
 v2.addLayout(h1)
@@ -93,6 +97,7 @@ h1.addWidget(button1)
 h1.addWidget(button2)
 h1.addWidget(button3)
 h1.addWidget(button4)
+
 
 class WorkPhoto:
     def __init__(self):
@@ -132,7 +137,10 @@ class WorkPhoto:
     def contrast(self):
         self.image = ImageEnhance.Contrast(self.image).enhance(2.2)
         self.showImage()
+
+
 urban = WorkPhoto()
+
 
 def open_folder():
     urban.folder = QFileDialog.getExistingDirectory()
@@ -140,10 +148,12 @@ def open_folder():
     listfould.clear()
     listfould.addItems(files)
 
+
 def showChosenImage():
     urban.filename = listfould.currentItem().text()
     urban.load()
     urban.showImage()
+
 
 listfould.currentRowChanged.connect(showChosenImage)
 
@@ -156,3 +166,5 @@ fould.clicked.connect(open_folder)
 window.setLayout(mainline)
 window.show()
 app.exec()
+
+#
