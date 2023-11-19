@@ -1,4 +1,4 @@
-from PIL import Image
+from PIL import Image, ImageFilter
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QImage, QPixmap
 from PyQt5.QtWidgets import *
@@ -73,6 +73,10 @@ button1 = QPushButton("Вправо")
 button2 = QPushButton("Дзеркало")
 button3 = QPushButton("Різкість")
 button4 = QPushButton("Чорно/білий фон")
+button5 = QPushButton("Вліво")
+button6 = QPushButton("Вправо")
+button7 = QPushButton("Дзеркало")
+
 
 mainline.addLayout(v1, stretch=2)
 mainline.addLayout(v2, stretch=4)
@@ -113,6 +117,21 @@ class WorkPhoto:
         self.image = self.image.transpose(Image.ROTATE_270)
         self.showImage()
 
+    def mirror(self):
+        self.image = self.image.transpose(Image.FLIP_LEFT_RIGHT)
+        self.showImage()
+
+    def sharper(self):
+        self.image = self.image.filter(ImageFilter.BLUR)
+        self.showImage()
+
+    def endolist(self):
+        self.image = self.image.convert(("L"))
+        self.showImage()
+
+    def contrast(self):
+        self.image = self.ImageEnhance.Contrast(self.image).enhance(2.2)
+        self.showImage()
 urban = WorkPhoto()
 
 def open_folder():
@@ -130,6 +149,9 @@ listfould.currentRowChanged.connect(showChosenImage)
 
 button0.clicked.connect(urban.rotate_left)
 button1.clicked.connect(urban.rotate_right)
+button2.clicked.connect(urban.mirror)
+button3.clicked.connect(urban.sharper)
+button4.clicked.connect(urban.endolist)
 fould.clicked.connect(open_folder)
 window.setLayout(mainline)
 window.show()
