@@ -1,4 +1,4 @@
-from PIL import Image, ImageFilter
+from PIL import Image, ImageFilter, ImageEnhance
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QImage, QPixmap
 from PyQt5.QtWidgets import *
@@ -130,7 +130,7 @@ class WorkPhoto:
         self.showImage()
 
     def contrast(self):
-        self.image = self.ImageEnhance.Contrast(self.image).enhance(2.2)
+        self.image = ImageEnhance.Contrast(self.image).enhance(2.2)
         self.showImage()
 urban = WorkPhoto()
 
